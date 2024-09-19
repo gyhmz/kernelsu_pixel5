@@ -1,0 +1,115 @@
+name: build_lxc_for_redbull
+on:
+  release:
+    types: [published]
+    repos:
+      - tiann/KernelSU
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release"
+        required: true
+        default: false
+        type: boolean
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v1
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: ture
+        
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+        
+      # Runs a single command using the runners shell
+      - name: Preparing
+        run: |
+          cd /home/runner
+          echo 'Preparing packages'
+          sudo apt-get update -y
+          sudo apt-get install -y repo git
+          mkdir android-kernel && cd android-kernel
+          echo 'pulling kernel source'
+          repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android13-qpr3
+          repo sync
+          #cd private/msm-google
+
+
+      - name: Setup LXC
+        run: |
+          cd /home/runner/android-kernel/private/msm-google/
+          rm -rf utils
+          git clone https://github.com/tomxi1997/lxc-docker-support-for-android.git utils
+          echo 'source "utils/Kconfig"' >> "Kconfig"
+
+          echo "CONFIG_DOCKER=y" >> arch/arm64/configs/redbull_defconfig
+
+          sed -i '/CONFIG_ANDROID_PARANOID_NETWORK/d' arch/arm64/configs/redbull_defconfig
+          echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> arch/arm64/configs/redbull_defconfig
+          
+          #sed -i '/CONFIG_LOCALVERSION/d' arch/arm64/configs/redbull_defconfig
+          #echo 'CONFIG_LOCALVERSION="-LXC-KernelSU-support_Pdx"' >> arch/arm64/configs/redbull_defconfig
+          
+          chmod +x /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh
+          if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c ]; then
+              sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c
+          fi
+
+          if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup.c ]; then
+              sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup.c
+          fi
+
+          if [ -f /home/runner/android-kernel/private/msm-google/net/netfilter/xt_qtaguid.c ]; then
+              patch -p0 < /home/runner/android-kernel/private/msm-google/utils/xt_qtaguid.patch
+          fi
+
+
+
+      - name: Build
+        run: |
+          cd /home/runner/android-kernel
+          ./build_redbull-gki.sh
+ 
+      - name: Setting up AnyKenrel3
+        run: |
+          cd /home/runner/android-kernel
+          git clone https://github.com/osm0sis/AnyKernel3.git
+          sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
+          sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
+          sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
+          cp /home/runner/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb AnyKernel3/
+          cd ./AnyKernel3/
+          zip -r AnyKernel3 . -x ".git*" -x "README.md" -x "*.zip"
+
+      - name: Upload kernel
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: AnyKernel3.zip
+          path: "/home/runner/android-kernel/AnyKernel3/AnyKernel3.zip"
+
+      - name: Upload kernel
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Image.lz4-dtb
+          path: "/home/runner/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb"
