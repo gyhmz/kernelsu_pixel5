@@ -86,7 +86,7 @@ jobs:
 
           echo "removing check_defconfig" 
           
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config"/POST_DEFCONFIG_CMDS="update_config"/g' /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
           
           cat /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
 
