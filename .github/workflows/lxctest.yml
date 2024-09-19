@@ -55,7 +55,7 @@ jobs:
 
 
       - name: Setup LXC
-        if: false
+        if: true
         run: |
           cd /home/runner/android-kernel/private/msm-google/
           rm -rf utils
