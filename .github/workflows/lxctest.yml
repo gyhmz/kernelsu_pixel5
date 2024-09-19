@@ -94,9 +94,11 @@ jobs:
           #cat /home/runner/android-kernel/private/msm-google/*
 
           echo "removing check_defconfig" 
-          
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' /home/runner/android-kernel/private/msm-google/*
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/private/msm-google/*
+          find /home/runner/android-kernel/ -type f -exec sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' {} \;
+          find /home/runner/android-kernel/ -type f -exec sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' {} \;
+
+          #sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' /home/runner/android-kernel/private/msm-google/*
+          #sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/private/msm-google/*
 
 
           #ls -l /home/runner/android-kernel/private/msm-google/
