@@ -63,6 +63,14 @@ jobs:
           echo 'source "utils/Kconfig"' >> "Kconfig"
 
           echo "CONFIG_DOCKER=y" >> arch/arm64/configs/redbull_defconfig
+          echo "CONFIG_SECURITY_APPARMOR=y" >> arch/arm64/configs/redbull_defconfig
+          echo "CONFIG_NF_NAT_IPV6=y" >> arch/arm64/configs/redbull_defconfig
+          echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> arch/arm64/configs/redbull_defconfig
+
+          
+
+          
+          
 
           sed -i '/CONFIG_ANDROID_PARANOID_NETWORK/d' arch/arm64/configs/redbull_defconfig
           echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> arch/arm64/configs/redbull_defconfig
