@@ -91,6 +91,7 @@ jobs:
           sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config"/POST_DEFCONFIG_CMDS="update_config"/g'  /home/runner/android-kernel/private/msm-google/build.config.redbull.common.clang
           
           cat /home/runner/android-kernel/private/msm-google/build.config.redbull.common.clang
+          cat /home/runner/android-kernel/private/msm-google/build.sh
 
 
       - name: Build
