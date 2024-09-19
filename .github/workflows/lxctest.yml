@@ -55,7 +55,7 @@ jobs:
 
 
       - name: Setup LXC
-        if: false
+        if: true
         run: |
           cd /home/runner/android-kernel/private/msm-google/
           rm -rf utils
@@ -90,8 +90,9 @@ jobs:
           echo "removing check_defconfig" 
           
 
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' ./build.config.redbull.vintf > build.config.redbull.vintf
+          cat ./build.config.redbull.vintf
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf > build.config.redbull.vintf
           #sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
 
           
@@ -102,8 +103,8 @@ jobs:
         if: always()
         run: |
           cd /home/runner/android-kernel
-          #./build_redbull-gki.sh
-          ./build_redbull.sh
+          ./build_redbull-gki.sh
+          #./build_redbull.sh
 
  
       - name: Setting up AnyKenrel3
