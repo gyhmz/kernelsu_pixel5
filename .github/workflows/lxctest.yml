@@ -55,7 +55,7 @@ jobs:
 
 
       - name: Setup LXC
-        if: true
+        if: false
         run: |
           cd /home/runner/android-kernel/private/msm-google/
           rm -rf utils
@@ -102,7 +102,9 @@ jobs:
         if: always()
         run: |
           cd /home/runner/android-kernel
-          ./build_redbull-gki.sh
+          #./build_redbull-gki.sh
+          ./build_redbull.sh
+
  
       - name: Setting up AnyKenrel3
         if: always()
