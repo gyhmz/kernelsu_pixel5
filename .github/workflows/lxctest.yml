@@ -120,3 +120,14 @@ jobs:
         with:
           name: Image.lz4-dtb
           path: "/home/runner/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb"
+
+
+      - name: Check LXC
+        run: |
+          wget https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh
+          wget https://raw.githubusercontent.com/lxc/lxc/main/src/lxc/cmd/lxc-checkconfig.in
+          chmod +x check-config.sh
+          chmod +x lxc-checkconfig.in
+          CONFIG=/home/runner/android-kernel/out/android-msm-pixel-4.19/.config ./check-config.sh
+          CONFIG=/home/runner/android-kernel/out/android-msm-pixel-4.19/.config ./lxc-checkconfig.in
+          ls -a /home/runner/android-kernel/out/android-msm-pixel-4.19/
