@@ -86,11 +86,11 @@ jobs:
               echo xtqtaguidpatch
           fi
 
-          cat /home/runner/android-kernel/build_redbull-gki.sh
+          #cat /home/runner/android-kernel/build_redbull-gki.sh
 
-          cat /home/runner/android-kernel/private/msm-google/build.config.redbull.common.clang
+          #cat /home/runner/android-kernel/private/msm-google/build.config.redbull.common.clang
 
-          ls -l /home/runner/android-kernel/private/msm-google/
+          #ls -l /home/runner/android-kernel/private/msm-google/
           #cat /home/runner/android-kernel/private/msm-google/*
 
           echo "removing check_defconfig" 
@@ -100,7 +100,7 @@ jobs:
 
 
           #ls -l /home/runner/android-kernel/private/msm-google/
-          cat /home/runner/android-kernel/private/msm-google/*
+          #cat /home/runner/android-kernel/private/msm-google/*
 
 
       - name: Build
