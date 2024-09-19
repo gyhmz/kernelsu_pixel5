@@ -82,6 +82,8 @@ jobs:
               patch -p0 < /home/runner/android-kernel/private/msm-google/utils/xt_qtaguid.patch
           fi
 
+          cat /home/runner/android-kernel/build_redbull-gki.sh
+
           cat /home/runner/android-kernel/private/msm-google/build.config.redbull.common.clang
 
           echo "removing check_defconfig" 
