@@ -94,8 +94,8 @@ jobs:
           sed -i 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf
           #sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
 
-          sed -i 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' ./build.config.redbull.no-cfi
-          sed -i 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.no-cfi
+          #sed -i 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' ./build.config.redbull.no-cfi
+          #sed -i 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.no-cfi
           
           cat ./build.config.redbull.vintf
           cat ./build.config.redbull.no-cfi
@@ -106,8 +106,8 @@ jobs:
         if: always()
         run: |
           cd /home/runner/android-kernel
-          ./build_redbull-gki.sh
-          #./build_redbull.sh
+          #./build_redbull-gki.sh
+          ./build_redbull.sh
 
  
       - name: Setting up AnyKenrel3
