@@ -100,8 +100,8 @@ jobs:
           
           cat /home/runner/android-kernel/build.config
 
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' /home/runner/android-kernel/build.config
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/build.config
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' /home/runner/android-kernel/build.config > /home/runner/android-kernel/build.config
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/build.config > /home/runner/android-kernel/build.config
 
           cat /home/runner/android-kernel/build.config
 
