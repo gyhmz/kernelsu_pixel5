@@ -99,7 +99,7 @@ jobs:
 
 
           #ls -l /home/runner/android-kernel/private/msm-google/
-          #cat /home/runner/android-kernel/private/msm-google/*
+          cat /home/runner/android-kernel/private/msm-google/*
 
 
       - name: Build
