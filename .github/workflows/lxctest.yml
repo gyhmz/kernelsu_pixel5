@@ -70,19 +70,19 @@ jobs:
           #sed -i '/CONFIG_LOCALVERSION/d' arch/arm64/configs/redbull_defconfig
           #echo 'CONFIG_LOCALVERSION="-LXC-KernelSU-support_Pdx"' >> arch/arm64/configs/redbull_defconfig
           
-          chmod +x /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh
-          if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c ]; then
-              sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c
+          chmod +x ./utils/runcpatch.sh
+          if [ -f ./kernel/cgroup/cgroup.c ]; then
+              sh ./utils/runcpatch.sh ./kernel/cgroup/cgroup.c
               echo runcpatchcgroup
           fi
 
-          if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup.c ]; then
-              sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup.c
+          if [ -f ./kernel/cgroup.c ]; then
+              sh ./utils/runcpatch.sh ./kernel/cgroup.c
               echo runcpatchcgroup
           fi
 
-          if [ -f /home/runner/android-kernel/private/msm-google/net/netfilter/xt_qtaguid.c ]; then
-              patch -p0 < /home/runner/android-kernel/private/msm-google/utils/xt_qtaguid.patch
+          if [ -f ./net/netfilter/xt_qtaguid.c ]; then
+              patch -p0 < ./utils/xt_qtaguid.patch
               echo xtqtaguidpatch
           fi
 
@@ -99,8 +99,8 @@ jobs:
 
           
 
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf > /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
-          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf > /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && /POST_DEFCONFIG_CMDS="/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig"/POST_DEFCONFIG_CMDS=""/g' ./build.config.redbull.vintf > ./build.config.redbull.vintf
 
 
           #ls -l /home/runner/android-kernel/private/msm-google/
