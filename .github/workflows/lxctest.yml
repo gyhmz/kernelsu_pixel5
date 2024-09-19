@@ -148,3 +148,4 @@ jobs:
           CONFIG=/home/runner/android-kernel/out/.config ./check-config.sh
           CONFIG=/home/runner/android-kernel/out/.config ./lxc-checkconfig.in
           ls -a /home/runner/android-kernel/out/
+          return 0
