@@ -82,6 +82,13 @@ jobs:
               patch -p0 < /home/runner/android-kernel/private/msm-google/utils/xt_qtaguid.patch
           fi
 
+          cat /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
+
+          echo "removing check_defconfig" 
+          
+          sed 's/POST_DEFCONFIG_CMDS="check_defconfig && update_config"/POST_DEFCONFIG_CMDS="update_config"/g' /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
+          
+          cat /home/runner/android-kernel/private/msm-google/build.config.redbull.vintf
 
 
       - name: Build
