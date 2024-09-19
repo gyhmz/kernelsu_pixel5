@@ -66,6 +66,9 @@ jobs:
           cp /home/runner/kernelsu_redbull/stat.c /home/runner/android-kernel/private/msm-google/fs/stat.c
           cp /home/runner/kernelsu_redbull/input.c /home/runner/android-kernel/private/msm-google/drivers/input/input.c
           cd /home/runner/android-kernel
+          ls -l /home/runner/android-kernel/private/msm-google/
+          echo asdfghjkl
+          ls -l /home/runner/android-kernel/
 
       - name: Build
         run: |
