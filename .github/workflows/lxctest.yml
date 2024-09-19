@@ -72,14 +72,17 @@ jobs:
           chmod +x /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh
           if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c ]; then
               sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup/cgroup.c
+              echo runcpatchcgroup
           fi
 
           if [ -f /home/runner/android-kernel/private/msm-google/kernel/cgroup.c ]; then
               sh /home/runner/android-kernel/private/msm-google/utils/runcpatch.sh /home/runner/android-kernel/private/msm-google/kernel/cgroup.c
+              echo runcpatchcgroup
           fi
 
           if [ -f /home/runner/android-kernel/private/msm-google/net/netfilter/xt_qtaguid.c ]; then
               patch -p0 < /home/runner/android-kernel/private/msm-google/utils/xt_qtaguid.patch
+              echo xtqtaguidpatch
           fi
 
           cat /home/runner/android-kernel/build_redbull-gki.sh
